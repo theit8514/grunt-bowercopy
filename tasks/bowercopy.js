@@ -23,10 +23,15 @@ module.exports = function (grunt) {
 		sep = path.sep;
 
 	// Get all modules
-	var bowerConfig = grunt.file.readJSON('bower.json');
-	var allModules = Object.keys(
-		_.extend({}, bowerConfig.dependencies, bowerConfig.devDependencies)
-	);
+	var allModules;
+	if (grunt.file.exists('bower.json')) {
+		var bowerConfig = grunt.file.readJSON('bower.json');
+		allModules = Object.keys(
+			_.extend({}, bowerConfig.dependencies, bowerConfig.devDependencies)
+		);
+	} else {
+		allModules = [];
+	}
 	var unused = allModules.slice(0);
 
 	// Track number of runs
